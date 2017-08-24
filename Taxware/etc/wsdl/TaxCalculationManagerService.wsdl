@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wns="http://ws.taxware.com/service" xmlns:tns="http://ws.taxwareenterprise.com" xmlns:ens="http://ws.taxware.com/exception" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.taxware.com/service">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.taxwareenterprise.com" elementFormDefault="qualified">
+     <!-- This schema import is for the common complex types for both batch and tax. -->
+     <!--Any common complex types to both tax and batch should go to the TaxBatchCommon.xsd -->
+
+     <xs:element name="abortRequest" type="tns:TransactionRequest"/>
+     <xs:element name="commitRequest" type="tns:TransactionRequest"/>
+     <xs:element name="abortWithResponseRequest" type="tns:TransactionRequest"/>
+     <xs:element name="commitWithResponseRequest" type="tns:TransactionRequest"/>
+     <xs:element name="abortResponse" type="tns:AbortCommitResponse"/>
+     <xs:element name="commitResponse" type="tns:AbortCommitResponse"/>
+     <xs:element name="calculateDocumentRequest" type="tns:CalculationRequest"/>
+     <xs:element name="calculateDocumentResponse" type="tns:CalculationResponse"/>
+     <xs:element name="calculateLineRequest" type="tns:CalculationRequest"/>
+     <xs:element name="calculateLineResponse" type="tns:CalculationResponse"/>
+     <xs:element name="forceCalculationRequest" type="tns:ForceCalculationRequest"/>
+     <xs:element name="forceCalculationResponse" type="tns:CalculationResponse"/>
+     <xs:element name="getResultByMyDocumentNumberRequest" type="tns:GetResultByMyDocumentNumberRequest"/>
+     <xs:element name="getResultByMyDocumentNumberResponse" type="tns:GetResultByMyDocumentNumberResponse"/>
+     <xs:element name="getResultByTaxwareDocumentIdRequest" type="tns:GetResultByTaxwareDocumentIdRequest"/>
+     <xs:element name="getResultByTaxwareDocumentIdResponse" type="tns:CalculationResponse"/>
+</schema>
+</wsdl:types>
+
+<wsdl:message name="abtRequest">
+	<wsdl:part name="parameters" element="tns:abortRequest"/>
+</wsdl:message>
+<wsdl:message name="abtWithResRequest">
+	<wsdl:part name="parameters" element="tns:abortWithResponseRequest"/>
+</wsdl:message>
+<wsdl:message name="abtResponse">
+	<wsdl:part name="result" element="tns:abortResponse"/>
+</wsdl:message>
+<wsdl:message name="cmtRequest">
+	<wsdl:part name="parameters" element="tns:commitRequest"/>
+</wsdl:message>
+<wsdl:message name="cmtWithResRequest">
+	<wsdl:part name="parameters" element="tns:commitWithResponseRequest"/>
+</wsdl:message>
+<wsdl:message name="cmtResponse">
+	<wsdl:part name="result" element="tns:commitResponse"/>
+</wsdl:message>
+<wsdl:message name="cdRequest">
+	<wsdl:part name="parameters" element="tns:calculateDocumentRequest"/>
+</wsdl:message>
+<wsdl:message name="cdResponse">
+	<wsdl:part name="result" element="tns:calculateDocumentResponse"/>
+</wsdl:message>
+<wsdl:message name="clRequest">
+	<wsdl:part name="parameters" element="tns:calculateLineRequest"/>
+</wsdl:message>
+<wsdl:message name="clResponse">
+	<wsdl:part name="result" element="tns:calculateLineResponse"/>
+</wsdl:message>
+<wsdl:message name="fcRequest">
+	<wsdl:part name="parameters" element="tns:forceCalculationRequest"/>
+</wsdl:message>
+<wsdl:message name="fcResponse">
+	<wsdl:part name="result" element="tns:forceCalculationResponse"/>
+</wsdl:message>
+<wsdl:message name="grbmdnRequest">
+	<wsdl:part name="parameters" element="tns:getResultByMyDocumentNumberRequest"/>
+</wsdl:message>
+<wsdl:message name="grbmdnResponse">
+	<wsdl:part name="result" element="tns:getResultByMyDocumentNumberResponse"/>
+</wsdl:message>
+<wsdl:message name="grbtdiRequest">
+	<wsdl:part name="parameters" element="tns:getResultByTaxwareDocumentIdRequest"/>
+</wsdl:message>
+<wsdl:message name="grbtdiResponse">
+	<wsdl:part name="result" element="tns:getResultByTaxwareDocumentIdResponse"/>
+</wsdl:message>
+<wsdl:message name="twFault">
+	<wsdl:part name="fault" element="tns:tweFault"/>
+</wsdl:message>
+
+<wsdl:portType name="TaxCalculationManagerServiceInterface">
+	<wsdl:operation name="abort">
+		<wsdl:input message="wns:abtRequest"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+	<wsdl:operation name="commit">
+		<wsdl:input message="wns:cmtRequest"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+    	<wsdl:operation name="abortWithResponse">
+      		<wsdl:input message="wns:abtWithResRequest"/>
+      		<wsdl:output message="wns:abtResponse"/>
+      		<wsdl:fault name="twFault" message="wns:twFault"/>
+    	</wsdl:operation>
+    	<wsdl:operation name="commitWithResponse">
+      		<wsdl:input message="wns:cmtWithResRequest"/>
+      		<wsdl:output message="wns:cmtResponse"/>
+      		<wsdl:fault name="twFault" message="wns:twFault"/>
+    	</wsdl:operation>
+	<wsdl:operation name="calculateDocument">
+		<wsdl:input message="wns:cdRequest"/>
+		<wsdl:output message="wns:cdResponse"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+	<wsdl:operation name="calculateLine">
+		<wsdl:input message="wns:clRequest"/>
+		<wsdl:output message="wns:clResponse"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+	<wsdl:operation name="forceCalculation">
+		<wsdl:input message="wns:fcRequest"/>
+		<wsdl:output message="wns:fcResponse"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+	<wsdl:operation name="getResultByMyDocumentNumber">
+		<wsdl:input message="wns:grbmdnRequest"/>
+		<wsdl:output message="wns:grbmdnResponse"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+	<wsdl:operation name="getResultByTaxwareDocumentId">
+		<wsdl:input message="wns:grbtdiRequest"/>
+		<wsdl:output message="wns:grbtdiResponse"/>
+		<wsdl:fault name="twFault" message="wns:twFault"/>
+	</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="TaxCalculationManagerServiceSoapBinding" type="wns:TaxCalculationManagerServiceInterface">
+	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="abort">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/abort"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="commit">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/commit"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="abortWithResponse">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/abortWithResponse"  style="document" />
+			<wsdl:input>
+		        	<soap:body use="literal"/>
+		      	</wsdl:input>
+		      	<wsdl:output>
+				<soap:body use="literal"/>
+		      	</wsdl:output>
+		      	<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+		      	</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="commitWithResponse">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/commitWithResponse"  style="document" />
+			<wsdl:input>
+		      		<soap:body use="literal"/>
+		      	</wsdl:input>
+		      	<wsdl:output>
+		      		<soap:body use="literal"/>
+		      	</wsdl:output>
+		      	<wsdl:fault name="twFault">
+		        	<soap:fault name="twFault" use="literal"/>
+		       	</wsdl:fault>
+		</wsdl:operation>
+				
+		<wsdl:operation name="calculateDocument">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/calculateDocument"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="calculateLine">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/calculateLine"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="forceCalculation">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/forceCalculation"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getResultByMyDocumentNumber">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/getResultByMyDocumentNumber"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getResultByTaxwareDocumentId">
+			<soap:operation soapAction="http://ws.taxwareenterprise.com/getResultByTaxwareDocumentId"  style="document" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="twFault">
+				<soap:fault name="twFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="TaxCalculationManagerServiceService">
+		<wsdl:port name="TaxCalculationManagerService" binding="wns:TaxCalculationManagerServiceSoapBinding">
+			<soap:address location="http://54.152.90.76:8086/twe/services/TaxCalculationManagerService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

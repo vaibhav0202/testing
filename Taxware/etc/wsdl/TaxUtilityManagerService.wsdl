@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions targetNamespace="http://ws.taxware.com/service"
+   xmlns:wns="http://ws.taxware.com/service"
+   xmlns:tns="http://ws.taxwareenterprise.com"
+   xmlns:ens="http://ws.taxware.com/exception"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     targetNamespace="http://ws.taxwareenterprise.com"
+     elementFormDefault="qualified">
+	
+	<xs:element name="authenticateRequest" type="tns:AuthenticateRequest"/>
+	<xs:element name="getGeoCodeRequest" type="tns:GeoCodeRequest"/>
+	<xs:element name="getGeoCodesRequest" type="tns:GeoCodeRequest"/>
+	<xs:element name="getGeoCodeResponse" type="tns:GeoCodeResponse"/>
+	<xs:element name="getGeoCodesResponse" type="tns:GeoCodeResponse"/>
+	<xs:element name="tweFault" type="tns:TweFault"/>
+  </schema>
+ </wsdl:types>
+ 
+ <wsdl:message name="authRequest">
+   <wsdl:part name="parameters" element="tns:authenticateRequest"/>
+ </wsdl:message>
+ 
+ <wsdl:message name="gcRequest">
+   <wsdl:part name="parameters" element="tns:getGeoCodeRequest"/>
+  </wsdl:message>
+ 
+  <wsdl:message name="gcsRequest">
+   <wsdl:part name="parameters" element="tns:getGeoCodesRequest"/>
+  </wsdl:message>
+ 
+  <wsdl:message name="gcResponse">
+   <wsdl:part name="result" element="tns:getGeoCodeResponse"/>
+  </wsdl:message>
+  
+  <wsdl:message name="gcsResponse">
+   <wsdl:part name="result" element="tns:getGeoCodesResponse"/>
+  </wsdl:message>
+  
+  <wsdl:message name="taxUtilFault">
+   <wsdl:part name="fault" element="tns:tweFault"/>
+  </wsdl:message>
+ 
+  <wsdl:portType name="TaxUtilityManagerServiceInterface">
+   <wsdl:operation name="getGeoCode">
+    <wsdl:input message="wns:gcRequest"/>
+    <wsdl:output message="wns:gcResponse"/>
+    <wsdl:fault name="taxUtilFault" message="wns:taxUtilFault"/>
+   </wsdl:operation>
+   <wsdl:operation name="getGeoCodes">
+    <wsdl:input message="wns:gcsRequest"/>
+    <wsdl:output message="wns:gcsResponse"/>
+    <wsdl:fault name="taxUtilFault" message="wns:taxUtilFault"/>
+   </wsdl:operation>
+   <wsdl:operation name="authenticate">
+    <wsdl:input message="wns:authRequest"/>
+    <wsdl:fault name="taxUtilFault" message="wns:taxUtilFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+   
+  <wsdl:binding name="TaxUtilityManagerServiceSoapBinding" type="wns:TaxUtilityManagerServiceInterface">
+   	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+   	<wsdl:operation name="getGeoCode">
+   		<soap:operation soapAction="http://ws.taxwareenterprise.com/getGeoCode"  style="document" />
+   		<wsdl:input>
+   			<soap:body use="literal"/>
+   		</wsdl:input>
+   		<wsdl:output>
+   			<soap:body use="literal"/>
+   		</wsdl:output>
+   		<wsdl:fault name="taxUtilFault">
+   			<soap:fault name="taxUtilFault" use="literal"/>
+   		</wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getGeoCodes">
+   		<soap:operation soapAction="http://ws.taxwareenterprise.com/getGeoCodes"  style="document" />
+   		<wsdl:input>
+   			<soap:body use="literal"/>
+   		</wsdl:input>
+   		<wsdl:output>
+   			<soap:body use="literal"/>
+   		</wsdl:output>
+   		<wsdl:fault name="taxUtilFault">
+   			<soap:fault name="taxUtilFault" use="literal"/>
+   		</wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="authenticate">
+            <soap:operation soapAction="http://ws.taxwareenterprise.com/authenticate"  style="document" />
+   	    <wsdl:input>
+	     <soap:body use="literal"/>
+	    </wsdl:input>
+	    <wsdl:fault name="taxUtilFault">
+	      <soap:fault name="taxUtilFault" use="literal"/>
+	    </wsdl:fault>
+	   </wsdl:operation>
+	   <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+  </wsdl:binding>
+  <wsdl:service name="TaxUtilityManagerServiceService">
+   <wsdl:port name="TaxUtilityManagerService" binding="wns:TaxUtilityManagerServiceSoapBinding">
+    <soap:address location="http://54.152.90.76:8086/twe/services/TaxUtilityManagerService"/>
+   </wsdl:port>
+  </wsdl:service>
+ 
+ </wsdl:definitions>

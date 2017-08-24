@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <FW_Taxware>
+            <version>0.1.0</version>
+        </FW_Taxware>
+    </modules>
+    <global>
+        <models>
+            <taxware>
+                <class>FW_Taxware_Model</class>
+            </taxware>
+        </models>
+        <helpers>
+            <taxware>
+                <class>FW_Taxware_Helper</class>
+            </taxware>
+        </helpers>
+        <sales>
+	    <quote>
+	        <totals>
+		    <tax>
+			<class>taxware/tax</class>
+		    </tax>
+		    <tax_subtotal>
+			<class>taxware/subtotal</class>
+		    </tax_subtotal>
+		</totals>
+	    </quote>
+	</sales>
+    </global>
+    <default>
+        <thirdparty>
+            <fw_taxware>
+                <taxware_orgcode>F+W OH</taxware_orgcode>
+                <taxware_geocode>840300325300</taxware_geocode>
+                <taxware_poo>840300325300</taxware_poo>
+                <taxware_poa>840300325300</taxware_poa>
+            </fw_taxware>
+        </thirdparty>
+    </default>
+</config>
